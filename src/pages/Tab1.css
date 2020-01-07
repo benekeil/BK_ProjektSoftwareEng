@@ -1,0 +1,18 @@
+.welcome-card img {
+  max-height: 100%;
+  
+  
+  overflow: hidden;
+
+  
+}
+
+.welcome {
+  max-height: 60vh;
+  overflow: hidden;
+}
+
+#LabelNewMonth {
+  position: relative;
+  left: 50%;
+}
