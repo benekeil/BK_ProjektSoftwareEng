@@ -34,6 +34,8 @@ import {
     getMonth: (event: CustomEvent<DatetimeChangeEventDetail>)=>void;
     getStartbudget: (event: CustomEvent<InputChangeEventDetail>)=>void;
     startRechner: ()=>void;
+    month: string;
+    startbudget: number;
   
   }
   
@@ -81,7 +83,7 @@ import {
          
           
           
-              <IonButton color="secondary" expand="block" routerLink="/newInput" onClick={this.props.startRechner}>Start Ausgabenrechner</IonButton>
+              <IonButton color="secondary" expand="block"  onClick={this.props.startRechner} disabled={this.props.month == "test" !|| this.props.startbudget == NaN}>Start Ausgabenrechner</IonButton>
             
           
         </IonContent>

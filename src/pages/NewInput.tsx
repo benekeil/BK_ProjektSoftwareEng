@@ -6,11 +6,12 @@ import { useIndexedDB } from 'react-indexed-db';
 
 
 interface IState{
-issue: boolean;
-revenue: boolean;
-title: string;
-value: number;
-date: string;
+issue?: boolean;
+revenue?: boolean;
+title?: string;
+value?: number;
+date?: string;
+isSet?: boolean;
 
 }
 
@@ -31,9 +32,12 @@ class NewInput extends React.Component<IProps, IState> {
     revenue: false,
     title: "",
     value: 0,
-    date: ""
+    date: "",
+    isSet: false
 
   }
+
+  
     /**
      * Methode um den Typ des Input Eintrags zu erhalten. 
      * Ein Input kann entweder Einnahme oder Ausgabe sein.
@@ -45,12 +49,14 @@ class NewInput extends React.Component<IProps, IState> {
         this.setState({
           issue: true ,
           revenue: false,
+          isSet: true,
         })
       }
       else if (event.detail.value==="Revenue (+)"){
         this.setState({
           issue: false ,
           revenue: true,
+          isSet: true
         })
       }
     }
@@ -84,10 +90,17 @@ class NewInput extends React.Component<IProps, IState> {
 
     public saveInput(){
       const {add} = useIndexedDB('inputs');
-      add({ausgabe: this.state.revenue, titel: this.state.title, betrag: this.state.value, datum: this.state.date, month: this.props.month, added: false, actualbudget: this.props.budget})
+      add({ausgabe: this.state.revenue, titel: this.state.title, betrag: this.state.value, datum: this.state.date, month: this.props.month, added: false, actualbudget: this.props.budget});
+      this.setState({ issue: false,
+        revenue: false,
+        title: "",
+        value: 0,
+        date: "",
+        isSet: false})
     }
   
     public render(){
+      
     return (
     <IonPage>
       <IonHeader>
@@ -139,7 +152,7 @@ class NewInput extends React.Component<IProps, IState> {
             <IonIcon slot="start" color="medium" icon={calendar} />
             <IonDatetime displayFormat="DD MMMM YY" pickerFormat="DD MMMM YY" mode="md"  min={this.props.month} max={this.props.month} placeholder="Select Date" onIonChange={this.getDate} ></IonDatetime>
           </IonItem>
-          <IonButton color="secondary" expand="block" routerLink="/actualMonth" onClick={()=>{this.saveInput(); this.props.getActualBudget(); }}>Add Input</IonButton>
+          <IonButton color="secondary" expand="block" routerLink="/actualMonth" disabled={this.state.isSet == false !|| this.state.title == "" !|| this.state.value == 0 !|| this.state.date == ""} onClick={()=>{this.saveInput(); this.props.getActualBudget(); }}>Add Input</IonButton>
 
        </IonContent> 
     </IonPage>

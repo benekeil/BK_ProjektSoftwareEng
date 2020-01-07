@@ -16,6 +16,7 @@ import MonthReview from './pages/MonthReview';
 import NewInput from './pages/NewInput';
 import ActualMonth from './pages/ActualMonth';
 import Start from './pages/Start';
+import StartError from './errors/starterror';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -42,12 +43,10 @@ import { DBConfig } from './db/DBConfig';
 
 import { initDB, useIndexedDB } from 'react-indexed-db';
 
+
 initDB(DBConfig);
 
-/**
- * 
- * Documentation Projekt Softwareengineering
- */
+
 
 interface IState {
   month: string;
@@ -63,6 +62,7 @@ interface IState {
   monthID: number;
   firstLoad: boolean;
   normalMode: boolean;
+  starterror: boolean;
 }
 interface IProps {
 
@@ -75,10 +75,16 @@ interface actualMonthObj {
   id: number;
 }
 
+/**
+ * 
+ * Documentation Projekt Softwareengineering
+ * @author: Benedikt Keil
+ * 
+ */
 class App extends React.Component<IProps, IState>{
   state: IState = {
     actualBudget: 0,
-    startbudget: 0,
+    startbudget: NaN,
     month: "test",
     monthObj: [{ "month": "Test", "startbudget": 0 }],
     monthlistDB: [],
@@ -88,6 +94,7 @@ class App extends React.Component<IProps, IState>{
     monthID: 1,
     firstLoad: true,
     normalMode: false,
+    starterror: false
   }
 
 
@@ -177,6 +184,7 @@ class App extends React.Component<IProps, IState>{
         this.getActualMonth();
       }
     })
+    console.log(this.state.month+this.state.startbudget);
   }
 
 
@@ -186,6 +194,7 @@ class App extends React.Component<IProps, IState>{
   public startRechner = () => {
    
     const { add, getAll } = useIndexedDB('monthlist');
+    if (this.state.month !== "test" && this.state.startbudget !== 0){
     add({ month: this.state.month, startbudget: this.state.startbudget, actualbudget: this.state.startbudget });
     getAll().then((month) => {
       
@@ -204,6 +213,12 @@ class App extends React.Component<IProps, IState>{
         this.getActualMonth();
       })
     })
+    }
+    else {
+    this.setState({
+        starterror: true,
+    })
+    }
   }
 
 
@@ -307,7 +322,8 @@ class App extends React.Component<IProps, IState>{
     return (
       <IonApp onLoad={() => { this.firstLoadApp(); this.getMonthObj();}}>
 
-        {this.state.firstLoad && (<Start startRechner={this.startRechner} getMonth={this.getMonth} getStartbudget={this.getStartbudget}></Start>)}
+        {this.state.firstLoad && (<Start startRechner={this.startRechner} getMonth={this.getMonth} getStartbudget={this.getStartbudget} month={this.state.month} startbudget={this.state.startbudget}></Start>)}
+        {this.state.starterror && (<StartError></StartError>)}
         <IonReactRouter>
 
           {this.state.normalMode && (<IonTabs>

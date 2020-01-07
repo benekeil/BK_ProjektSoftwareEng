@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_pages_tab1_.html">&quot;pages/Tab1&quot;</a>
+					<a href="../modules/_pages_actualmonth_.html">&quot;pages/ActualMonth&quot;</a>
 				</li>
 				<li>
-					<a href="_pages_tab1_.istate.html">IState</a>
+					<a href="_pages_actualmonth_.istate.html">IState</a>
 				</li>
 			</ul>
 			<h1>Interface IState</h1>
@@ -69,6 +69,13 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Klasse oder Komponente die den Aktuellen Monat mit allen zugehörigen Inputs anzeigt</p>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -84,8 +91,7 @@
 						<section class="tsd-index-section tsd-is-not-exported">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_pages_tab1_.istate.html#month" class="tsd-kind-icon">month</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_pages_tab1_.istate.html#startbudget" class="tsd-kind-icon">startbudget</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported"><a href="_pages_actualmonth_.istate.html#inputs" class="tsd-kind-icon">inputs</a></li>
 							</ul>
 						</section>
 					</div>
@@ -94,22 +100,12 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="month" class="tsd-anchor"></a>
-					<h3>month</h3>
-					<div class="tsd-signature tsd-kind-icon">month<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="inputs" class="tsd-anchor"></a>
+					<h3>inputs</h3>
+					<div class="tsd-signature tsd-kind-icon">inputs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in src/pages/Tab1.tsx:29</li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-					<a name="startbudget" class="tsd-anchor"></a>
-					<h3>startbudget</h3>
-					<div class="tsd-signature tsd-kind-icon">startbudget<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in src/pages/Tab1.tsx:30</li>
+							<li>Defined in <a href="https://github.com/benekeil/BK_ProjektSoftwareEng/blob/8dd48d3/src/pages/ActualMonth.tsx#L15">src/pages/ActualMonth.tsx:15</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -128,19 +124,25 @@
 						<a href="../modules/_app_test_.html">&quot;<wbr>App.test&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="../modules/_db_dbconfig_.html">&quot;db/DBConfig&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_index_.html">&quot;index&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_pages_details_.html">&quot;pages/<wbr>Details&quot;</a>
-					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_pages_tab1_.html">&quot;pages/<wbr>Tab1&quot;</a>
+						<a href="../modules/_pages_actualmonth_.html">&quot;pages/<wbr>Actual<wbr>Month&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_pages_tab2_.html">&quot;pages/<wbr>Tab2&quot;</a>
+						<a href="../modules/_pages_monthreview_.html">&quot;pages/<wbr>Month<wbr>Review&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_pages_tab3_.html">&quot;pages/<wbr>Tab3&quot;</a>
+						<a href="../modules/_pages_newinput_.html">&quot;pages/<wbr>New<wbr>Input&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_newmonth_.html">&quot;pages/<wbr>New<wbr>Month&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_pages_start_.html">&quot;pages/<wbr>Start&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_serviceworker_.html">&quot;service<wbr>Worker&quot;</a>
@@ -150,21 +152,18 @@
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
-						<a href="../classes/_pages_tab1_.tab1.html" class="tsd-kind-icon">Tab1</a>
+						<a href="../classes/_pages_actualmonth_.actualmonth.html" class="tsd-kind-icon">Actual<wbr>Month</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_pages_tab1_.iprops.html" class="tsd-kind-icon">IProps</a>
+						<a href="_pages_actualmonth_.iprops.html" class="tsd-kind-icon">IProps</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="_pages_tab1_.istate.html" class="tsd-kind-icon">IState</a>
+						<a href="_pages_actualmonth_.istate.html" class="tsd-kind-icon">IState</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_pages_tab1_.istate.html#month" class="tsd-kind-icon">month</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-not-exported">
-								<a href="_pages_tab1_.istate.html#startbudget" class="tsd-kind-icon">startbudget</a>
+								<a href="_pages_actualmonth_.istate.html#inputs" class="tsd-kind-icon">inputs</a>
 							</li>
 						</ul>
 					</li>

@@ -6,9 +6,7 @@ import {useIndexedDB} from 'react-indexed-db';
 
 
 
-  /**
-   * Klasse oder Komponente die den Aktuellen Monat mit allen zugehörigen Inputs anzeigt
-   */
+  
 
 
   interface IState {
@@ -23,7 +21,9 @@ import {useIndexedDB} from 'react-indexed-db';
   }
 
 
-
+  /**
+   * Klasse oder Komponente die den Aktuellen Monat mit allen zugehörigen Inputs anzeigt
+   */
 class ActualMonth extends React.Component<IProps, IState> {
   state: IState ={
     inputs: []
