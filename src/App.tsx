@@ -35,22 +35,14 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+
 import { DatetimeChangeEventDetail, InputChangeEventDetail } from '@ionic/core';
 import { DBConfig } from './db/DBConfig';
 
 
 import { initDB, useIndexedDB } from 'react-indexed-db';
 
-
-
-
-
 initDB(DBConfig);
-
-
-
-
-
 
 /**
  * 
@@ -123,13 +115,14 @@ class App extends React.Component<IProps, IState>{
       startbudget: parseInt(event.detail.value!),
 
     })
-      console.log(this.state.startbudget);
+    console.log(this.state.startbudget);
 
 
   }
   /**
    * Methode um Eingaben über Monat und Startbudget in Indexed DB zu speichern 
-   * und um alle gespeicherten Monate in Indexed DB als State (monthlistDB) zu speichern
+   * und um alle gespeicherten Monate in Indexed DB als State (monthlistDB) zu speichern.
+   * Aufruf der Methode getActualMonth um aktuellen Monat in App zu setzen.
    */
   public pushMonthObj = () => {
 
@@ -146,11 +139,8 @@ class App extends React.Component<IProps, IState>{
       this.setState({
         monthlistDB: monthlistDB
       })
-      //this.state.monthlistDB.push(monthlistDB);
-    }
-    )
-
-
+    })
+    this.getActualMonth();
   }
 
   /**
@@ -163,12 +153,13 @@ class App extends React.Component<IProps, IState>{
       this.setState({
         monthlistDB: monthlistDB
       })
-      //this.state.monthlistDB.push(monthlistDB);
-    }
-    )
+    })
   }
 
-
+  /**
+   * Methode um Startseite beim aller ersten Start der App zu starten.
+   * Die Seite wird benötigt um einen ersten Datenbank Eintrag zu generieren.
+   */
   public firstLoadApp = () => {
     const { getAll } = useIndexedDB('monthlist');
     getAll().then((month) => {
@@ -178,7 +169,7 @@ class App extends React.Component<IProps, IState>{
           firstLoad: true,
         })
       }
-      else{
+      else {
         this.setState({
           firstLoad: false,
           normalMode: true,
@@ -186,16 +177,19 @@ class App extends React.Component<IProps, IState>{
         this.getActualMonth();
       }
     })
-    
   }
 
+
+  /**
+   * Methode erstellt nach betätigen des "Start Ausgabenrechner" Buttons den ersten Datenbankeintrag in dem objectStore "monthlist"
+   */
   public startRechner = () => {
-    console.log("startRechner");
+   
     const { add, getAll } = useIndexedDB('monthlist');
     add({ month: this.state.month, startbudget: this.state.startbudget, actualbudget: this.state.startbudget });
     getAll().then((month) => {
-      console.log("getAll01");
-      if (month.length === 0){
+      
+      if (month.length === 0) {
         add({ month: this.state.month, startbudget: this.state.startbudget, actualbudget: this.state.startbudget });
       }
       getAll().then((month) => {
@@ -206,20 +200,17 @@ class App extends React.Component<IProps, IState>{
           firstLoad: false,
           normalMode: true,
         })
-        
+
         this.getActualMonth();
       })
     })
-    console.log("monthObj "+ this.state.allMonthObj)
-  
-   
-    
   }
 
 
   /**
    * Methode um aktuellen Monat (letzter hinzugefügter Monat) abzurufen
-   * und speichern der Werte dieses Monats als State (month, startbudget, actualbudget)
+   * und speichern der Werte dieses Monats als State (month, startbudget, actualbudget).
+   * Aufruf der Methode getActualBudget um aktuelles Budget abzurufen, wenn sich der Monat ändert.
    */
   public getActualMonth = () => {
 
@@ -227,41 +218,39 @@ class App extends React.Component<IProps, IState>{
     getAll().then((month) => {
 
 
-        this.setState({
-          allMonthObj: month
-        })
-
-        // console.log(this.state.allMonthObj);
-        //console.log(this.state.actualMonthObj);
-      }).then(() => {
-        getByID(Math.max.apply(Math, this.state.allMonthObj.map((o: any) => { this.setState({ monthID: o.id }); return o.id }))).then((actualMonth) => {
-          console.log(actualMonth);
-
-          this.setState({
-            actualMonthObj: actualMonth,
-          })
-          this.setState({
-            month: this.state.actualMonthObj.month,
-            startbudget: this.state.actualMonthObj.startbudget,
-            actualBudget: this.state.actualMonthObj.actualbudget,
-          })
-
-          console.log(this.state.actualBudget)
-
-
-        })
+      this.setState({
+        allMonthObj: month
       })
+    }).then(() => {
+      getByID(Math.max.apply(Math, this.state.allMonthObj.map((o: any) => { this.setState({ monthID: o.id }); return o.id }))).then((actualMonth) => {
+        console.log(actualMonth);
 
-    }
+        this.setState({
+          actualMonthObj: actualMonth,
+        })
+        this.setState({
+          month: this.state.actualMonthObj.month,
+          startbudget: this.state.actualMonthObj.startbudget,
+          actualBudget: this.state.actualMonthObj.actualbudget,
+        })
+        this.forceUpdate();
+        console.log(this.state.actualBudget)
+        this.getActualBudget();
 
-  
+
+      })
+    })
+
+  }
+
+
 
   /**
    * Methode um aktuelles Budget aller Inputs des aktuellen Monats zu berechnen.
    * Speichert den Wert in State (aktualBudget) 
    */
   public getActualBudget = () => {
-    //this.forceUpdate();
+   
     const { getAll, update } = useIndexedDB('inputs');
 
     getAll().then((inputs) => {
@@ -270,23 +259,22 @@ class App extends React.Component<IProps, IState>{
         inputs: inputs
       })
     }).then(() => {
-     // this.forceUpdate();
-      //console.log("test actualBudget");
-      //console.log("vor !==0");
-      if (this.state.inputs.length !== 0) {
-       // console.log("!==0 aktive")
-        this.state.inputs.map((index: any) => {
-          //console.log(index.betrag);
-          //console.log("index.month01 : "+index.month);
-          //console.log("state.month: "+this.state.month);
 
-          
-          if (index.month === this.state.month && index.added === false) {
-            //console.log("index.month: "+index.month);
+      if (this.state.inputs.length !== 0) {
+        
+        this.state.inputs.map((index: any) => {
+          if (index.month === this.state.month && index.added === true){
             let actualBudget = index.actualbudget;
-          this.setState({
-            actualBudget: actualBudget,
-          })
+            this.setState({
+              actualBudget: actualBudget,
+            })
+          }
+          if (index.month === this.state.month && index.added === false) {
+
+            let actualBudget = index.actualbudget;
+            this.setState({
+              actualBudget: actualBudget,
+            })
             if (index.ausgabe) {
 
               actualBudget += index.betrag;
@@ -294,7 +282,7 @@ class App extends React.Component<IProps, IState>{
                 actualBudget: actualBudget,
               })
               update({ inputs_id: index.inputs_id, betrag: index.betrag, ausgabe: index.ausgabe, titel: index.titel, datum: index.datum, month: index.month, added: true, actualbudget: actualBudget });
-              console.log("plus: " + this.state.actualBudget);
+              
             }
             else {
               actualBudget -= index.betrag;
@@ -302,32 +290,26 @@ class App extends React.Component<IProps, IState>{
                 actualBudget: actualBudget,
               });
               update({ inputs_id: index.inputs_id, betrag: index.betrag, ausgabe: index.ausgabe, titel: index.titel, datum: index.datum, month: index.month, added: true, actualbudget: actualBudget });
-              console.log("minus: " + this.state.actualBudget);
+              
             }
           }
 
           return {
-
-          }
-        }
-        )
-      }
-
+           }
+         })
+       }
     })
-
-
-
   }
 
 
   public render() {
 
     return (
-      <IonApp onLoad={() => { this.firstLoadApp(); this.getMonthObj(); }}>
+      <IonApp onLoad={() => { this.firstLoadApp(); this.getMonthObj(); this.getActualMonth(); this.getActualBudget();}}>
 
-        {this.state.firstLoad && (<Start startRechner ={this.startRechner} getMonth={this.getMonth} getStartbudget={this.getStartbudget}></Start>)}
+        {this.state.firstLoad && (<Start startRechner={this.startRechner} getMonth={this.getMonth} getStartbudget={this.getStartbudget}></Start>)}
         <IonReactRouter>
-        
+
           {this.state.normalMode && (<IonTabs>
             <IonRouterOutlet>
               <Route path="/newMonth" >
@@ -342,9 +324,9 @@ class App extends React.Component<IProps, IState>{
               </Route>
               <Route path="/" render={() => <Redirect to="/start" />} exact={true} />
             </IonRouterOutlet>
-           
+
             <IonTabBar slot="bottom">
-            <IonTabButton tab="tab3" href="/newInput">
+              <IonTabButton tab="newInput" href="/newInput" onClick={this.getActualBudget}>
                 <IonIcon icon={addCircle} />
                 <IonLabel>New Input</IonLabel>
               </IonTabButton>
@@ -352,19 +334,19 @@ class App extends React.Component<IProps, IState>{
                 <IonIcon icon={calendar} />
                 <IonLabel> Actual Month </IonLabel>
               </IonTabButton>
-              <IonTabButton tab="tab1" href="/newMonth">
+              <IonTabButton tab="newMonth" href="/newMonth">
                 <IonIcon icon={addCircleOutline} />
                 <IonLabel>New Month</IonLabel>
               </IonTabButton>
-              <IonTabButton tab="tab2" href="/monthReview">
+              <IonTabButton tab="monthReview" href="/monthReview">
                 <IonIcon icon={calendar} />
                 <IonLabel>Month Review</IonLabel>
               </IonTabButton>
-              
-              
+
+
             </IonTabBar>
           </IonTabs>)}
-          
+
         </IonReactRouter>
       </IonApp>
     )

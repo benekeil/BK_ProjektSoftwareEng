@@ -42,7 +42,7 @@ class MonthReview extends React.Component<IProps, IState> {
     })
     this.getMonthInputs();
     this.getMonthValues();
-    //console.log(this.state.reviewedMonth);
+   
   }
 
   /**
@@ -96,7 +96,7 @@ class MonthReview extends React.Component<IProps, IState> {
               <IonLabel>
 
               </IonLabel>
-              <IonSelect multiple={false} onIonChange={this.getMonthReview}>
+              <IonSelect slot="start" multiple={false} placeholder="Select Month" onIonChange={this.getMonthReview}>
                 {
                   this.props.monthObj.map((index: any) => {
                     return (

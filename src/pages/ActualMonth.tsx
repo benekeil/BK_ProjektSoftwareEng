@@ -34,15 +34,14 @@ class ActualMonth extends React.Component<IProps, IState> {
    * Methode um alle Inputs aus der Indexed DB abzurufen
    */
   public getInputsByIndex= ()=> {
-const {getAll} = useIndexedDB('inputs');
+      const {getAll} = useIndexedDB('inputs');
 
-getAll().then((inputs) =>{
+      getAll().then((inputs) =>{
   
-  this.setState({
-    inputs: inputs
-  })
-})
-
+        this.setState({
+         inputs: inputs
+       })
+      })
   } 
  
 

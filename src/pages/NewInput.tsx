@@ -21,46 +21,57 @@ interface IProps {
 
 }
 
+/**
+ * Klasse bzw Komponente um neue Input Eintrage für den aktuellen Monat erstellen
+ */
+
 class NewInput extends React.Component<IProps, IState> {
-  
-  public getType = (event: CustomEvent<InputChangeEventDetail>) => {
+  state: IState ={
+    issue: false,
+    revenue: false,
+    title: "",
+    value: 0,
+    date: ""
+
+  }
+    /**
+     * Methode um den Typ des Input Eintrags zu erhalten. 
+     * Ein Input kann entweder Einnahme oder Ausgabe sein.
+     *   
+     */
+    public getType = (event: CustomEvent<InputChangeEventDetail>) => {
     
-    if (event.detail.value==="Issue (-)"){
-      this.setState({
-        issue: true ,
-        revenue: false,
+      if (event.detail.value==="Issue (-)"){
+        this.setState({
+          issue: true ,
+          revenue: false,
         })
-    }
-    else if (event.detail.value==="Revenue (+)"){
-      this.setState({
-        issue: false ,
-        revenue: true,
+      }
+      else if (event.detail.value==="Revenue (+)"){
+        this.setState({
+          issue: false ,
+          revenue: true,
         })
+      }
     }
     
-    console.log("issue: "+this.state.issue);
-    console.log("revenue: "+this.state.revenue);
-    
-    }
-  
-  public getTitle = (event: CustomEvent<InputChangeEventDetail>) => {
-    this.setState({
-    title: event.detail.value! ,
-    })
-    
-   
-    
+    /**
+     * Methode um den Title eines Eintrags zu erhalten und diesen in den State
+     */
+    public getTitle = (event: CustomEvent<InputChangeEventDetail>) => {
+      this.setState({
+        title: event.detail.value! ,
+      })
     }
 
 
-  public getValue = (event: CustomEvent<InputChangeEventDetail>) => {
-    this.setState({
-    value: parseInt(event.detail.value!) ,
-    })
-    
-  
-    
+    public getValue = (event: CustomEvent<InputChangeEventDetail>) => {
+     this.setState({
+        value: parseInt(event.detail.value!) ,
+      })  
     }
+
+
     public getDate = (event: CustomEvent<DatetimeChangeEventDetail>) => {
       let date = event.detail.value;
       
@@ -68,20 +79,16 @@ class NewInput extends React.Component<IProps, IState> {
       this.setState({
         date: date!,
     
-      });
-      
-      
-     
+      });     
     }
 
     public saveInput(){
       const {add} = useIndexedDB('inputs');
       add({ausgabe: this.state.revenue, titel: this.state.title, betrag: this.state.value, datum: this.state.date, month: this.props.month, added: false, actualbudget: this.props.budget})
-      
     }
   
-  public render(){
-  return (
+    public render(){
+    return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
@@ -136,8 +143,8 @@ class NewInput extends React.Component<IProps, IState> {
 
        </IonContent> 
     </IonPage>
-  );
-  }
+    );
+   }
 };
 
 export default NewInput;

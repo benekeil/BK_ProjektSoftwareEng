@@ -84,7 +84,7 @@ state: IState ={
             <IonInput type="number" placeholder="Select Startbudget"  inputMode="numeric" onIonChange={this.props.getStartbudget}></IonInput>
             </IonItem>
         
-            <IonButton color="secondary" expand="block" routerLink="/monthReview" onClick={this.props.pushMonthObj}>Start Month</IonButton>
+            <IonButton color="secondary" expand="block" routerLink="/newInput" onClick={this.props.pushMonthObj}>Start Month</IonButton>
           
         
       </IonContent>
