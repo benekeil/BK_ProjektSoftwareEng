@@ -9,22 +9,24 @@ import {
   IonIcon,
   IonItem,
   IonLabel,
-  IonList,
-  IonListHeader,
+ 
   IonPage,
   IonTitle,
   IonToolbar,
   IonInput,
   IonDatetime,
   IonButton,
-  IonButtons
+  
 } from '@ionic/react';
 import {calendar, cash } from 'ionicons/icons';
 import React from 'react';
 import './Tab1.css';
 import { DatetimeChangeEventDetail, InputChangeEventDetail } from '@ionic/core';
 
-
+/**
+ * Klasse bzw Komponente um die Seite der Monats Eingabe darzustellen
+ * Erhällt Methoden (getMonth, getStartbudget, pushMonthObj) von App Komponente als Props
+ */
 interface IState {
 month: string;
 startbudget: string;
@@ -37,7 +39,7 @@ interface IProps {
 
 }
 
-class Tab1 extends React.Component<IProps, IState>  {
+class NewMonth extends React.Component<IProps, IState>  {
 state: IState ={
   startbudget: "",
   month: "test"
@@ -59,21 +61,19 @@ state: IState ={
         <div className="welcome">
         <IonCard className="welcome-card">
           <img src="/assets/money.jpg" alt="" />
-          <IonCardHeader>
-            <IonCardSubtitle>Get Started</IonCardSubtitle>
-            <IonCardTitle>Mein Ausgabenrechner</IonCardTitle>
-          </IonCardHeader>
+         
           <IonCardContent>
             <p>
-              Infotext
-            </p>
+              Starten Sie einen neuen Monat, der aktuelle Monat wird dadurch abgeschlossen.</p>
+              Eine Übersicht über alle begonnen Monate finden Sie bei "Month Review".
+            
           </IonCardContent>
         </IonCard>
         </div>
 
        
         
-            <IonLabel position="floating" class="LabelNewMonth" id="LabelNewMonth">Start a new Month</IonLabel>
+            
           
           <IonItem >
             <IonIcon slot="start" color="medium" icon={calendar} />
@@ -84,7 +84,7 @@ state: IState ={
             <IonInput type="number" placeholder="Select Startbudget"  inputMode="numeric" onIonChange={this.props.getStartbudget}></IonInput>
             </IonItem>
         
-            <IonButton color="secondary" expand="block" routerLink="/tab2" onClick={this.props.pushMonthObj}>Start Month</IonButton>
+            <IonButton color="secondary" expand="block" routerLink="/monthReview" onClick={this.props.pushMonthObj}>Start Month</IonButton>
           
         
       </IonContent>
@@ -92,4 +92,4 @@ state: IState ={
   );
 };
 }
-export default Tab1;
+export default NewMonth;

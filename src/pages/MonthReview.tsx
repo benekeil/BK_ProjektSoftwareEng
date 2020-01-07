@@ -1,11 +1,14 @@
 import React from 'react';
 import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonGrid, IonRow, IonCol } from '@ionic/react';
 
-import { DatetimeChangeEventDetail, InputChangeEventDetail } from '@ionic/core';
+import { InputChangeEventDetail } from '@ionic/core';
 import { useIndexedDB } from 'react-indexed-db';
 
 
-
+/**
+ * Klasse oder Komponente die alle bisher hinzugefügten Monate in einer Auswahl auflistet 
+ * und nach Auswahl eines Monats dessen kompletten Eingaben aufzeigt
+ */
 
 
 interface IState {
@@ -21,7 +24,7 @@ interface IProps {
 
 
 
-class Tab2 extends React.Component<IProps, IState> {
+class MonthReview extends React.Component<IProps, IState> {
   state: IState = {
     inputs: [],
     reviewedMonth: "",
@@ -29,6 +32,10 @@ class Tab2 extends React.Component<IProps, IState> {
     endBudget: 0
   }
 
+  /**
+   * Methode um ausgewählten Monat der Monatsauswahl zu speichern und
+   * Aufruf der Methodem getMonthInputs und getMonthValues
+   */
   public getMonthReview = (event: CustomEvent<InputChangeEventDetail>) => {
     this.setState({
       reviewedMonth: event.detail.value!,
@@ -38,6 +45,10 @@ class Tab2 extends React.Component<IProps, IState> {
     //console.log(this.state.reviewedMonth);
   }
 
+  /**
+   * Methode um alle Inputs der Indexed DB abzurufen und in State inputs zu speichern.
+   * Auch wird hier der Endbetrag des ausgewählten Monats gesetzt 
+   */
   public getMonthInputs = () => {
     const { getAll } = useIndexedDB('inputs');
 
@@ -53,16 +64,10 @@ class Tab2 extends React.Component<IProps, IState> {
             
           this.setState({
             endBudget: index.actualbudget
-          })
-          
-          
-           
+          })  
         }
-        
       })
-    })
-   
-    
+    })   
   }
 
   public getMonthValues = () => {
@@ -72,11 +77,8 @@ class Tab2 extends React.Component<IProps, IState> {
 
       this.setState({
         monthlist: monthlist
-      })
-      
-    })
-    
-
+      })      
+    }) 
   }
 
   public render() {
@@ -171,4 +173,4 @@ class Tab2 extends React.Component<IProps, IState> {
   }
 
 }
-export default Tab2;
+export default MonthReview;

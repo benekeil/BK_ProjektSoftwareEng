@@ -1,5 +1,5 @@
 import React from 'react';
-import { IonHeader, IonToolbar, IonPage, IonTitle, IonContent, IonItem, IonInput, IonIcon, IonLabel, IonSelect, IonSelectOption, IonDatetime, IonButton } from '@ionic/react';
+import { IonHeader, IonToolbar, IonPage, IonTitle, IonContent, IonItem, IonInput, IonIcon, IonLabel, IonSelect, IonSelectOption, IonDatetime, IonButton, IonCard, IonCardContent } from '@ionic/react';
 import { cash, add, remove, text, calendar } from 'ionicons/icons';
 import { DatetimeChangeEventDetail, InputChangeEventDetail } from '@ionic/core';
 import { useIndexedDB } from 'react-indexed-db';
@@ -21,17 +21,17 @@ interface IProps {
 
 }
 
-class newInput extends React.Component<IProps, IState> {
+class NewInput extends React.Component<IProps, IState> {
   
   public getType = (event: CustomEvent<InputChangeEventDetail>) => {
     
-    if (event.detail.value==="Issue"){
+    if (event.detail.value==="Issue (-)"){
       this.setState({
         issue: true ,
         revenue: false,
         })
     }
-    else if (event.detail.value==="Revenue"){
+    else if (event.detail.value==="Revenue (+)"){
       this.setState({
         issue: false ,
         revenue: true,
@@ -75,8 +75,9 @@ class newInput extends React.Component<IProps, IState> {
     }
 
     public saveInput(){
-      const {add, getAll} = useIndexedDB('inputs');
+      const {add} = useIndexedDB('inputs');
       add({ausgabe: this.state.revenue, titel: this.state.title, betrag: this.state.value, datum: this.state.date, month: this.props.month, added: false, actualbudget: this.props.budget})
+      
     }
   
   public render(){
@@ -88,19 +89,32 @@ class newInput extends React.Component<IProps, IState> {
         </IonToolbar>
       </IonHeader>
       <IonContent>
-      <IonLabel position="floating">
+      <IonCard className="welcome-card">
+          <img src="/assets/money.jpg" alt="" />
+         
+          <IonCardContent>
+            <p>
+              Fügen Sie einen neuen Input hinzu.</p>
+              Eine Übersicht über alle Inputs des aktuellen Monats, sowie das aktuelle Budget finden Sie bei "Actual Month".
+            
+          </IonCardContent>
+        </IonCard>
+        <IonItem>
+      <IonLabel>
       Actual Month: {this.props.month}
       </IonLabel>
-      <br></br>
+      </IonItem>
+      <IonItem>
       <IonLabel>
       Actual Budget: {this.props.budget}
       </IonLabel>
+      </IonItem>
       <IonItem>
             <IonIcon slot="start" color="medium" icon={add} />
             <IonIcon slot="start" color="medium" icon={remove} />
             <IonSelect title="Input/Output" onIonChange={this.getType}>
-              <IonSelectOption>Revenue</IonSelectOption>
-              <IonSelectOption>Issue</IonSelectOption>
+              <IonSelectOption>Revenue (+)</IonSelectOption>
+              <IonSelectOption>Issue (-)</IonSelectOption>
             </IonSelect>
             </IonItem>
 
@@ -126,4 +140,4 @@ class newInput extends React.Component<IProps, IState> {
   }
 };
 
-export default newInput;
+export default NewInput;

@@ -1,5 +1,3 @@
-import { CreateObjectStore } from "react-indexed-db/lib/indexed-db";
-
 export const DBConfig = {
     name: 'MyDB',
     version: 2,
@@ -34,4 +32,3 @@ export const DBConfig = {
     ],
     
   };
-

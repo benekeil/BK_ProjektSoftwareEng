@@ -1,12 +1,14 @@
 import React from 'react';
-import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonItemDivider, IonRow, IonCol, IonGrid, IonIcon } from '@ionic/react';
+import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar, IonRow, IonCol, IonGrid} from '@ionic/react';
 
 
 import {useIndexedDB} from 'react-indexed-db';
 
 
 
-
+  /**
+   * Klasse oder Komponente die den Aktuellen Monat mit allen zugehörigen Inputs anzeigt
+   */
 
 
   interface IState {
@@ -17,6 +19,7 @@ import {useIndexedDB} from 'react-indexed-db';
   month: string;
   budget: number;
   getActualBudget: ()=> void; 
+  getActualMonth: ()=> void; 
   }
 
 
@@ -26,6 +29,10 @@ class ActualMonth extends React.Component<IProps, IState> {
     inputs: []
   }
  
+
+  /**
+   * Methode um alle Inputs aus der Indexed DB abzurufen
+   */
   public getInputsByIndex= ()=> {
 const {getAll} = useIndexedDB('inputs');
 
@@ -45,7 +52,7 @@ getAll().then((inputs) =>{
     this.getInputsByIndex();
    
   return (
-    <IonPage onLoad={()=>{this.props.getActualBudget();}}>
+    <IonPage onLoad={()=>{this.props.getActualMonth() ;this.props.getActualBudget();this.forceUpdate();}}>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Actual Month</IonTitle>
@@ -70,7 +77,26 @@ getAll().then((inputs) =>{
 
           <br></br>
           <IonList>
+            <IonItem>
+              <IonGrid>
+                <IonRow>
+                  <IonCol>
+                    Date
+                  </IonCol>
+                  <IonCol>
+                    Title
+                  </IonCol>
+                  <IonCol>
+                    Value
+                  </IonCol>
+                </IonRow>
+              </IonGrid>
+              </IonItem>
             {
+              /**
+               * Methode um alle Inputs aufzulisten die dem Aktuellen Monat zugehören.
+               * Es wird jeder Input nach Art (Einnahme und Ausgabe) überprüft und mit entsprechenden Symbol (+ oder -) versehen
+               */
             this.state.inputs.map((index: any)=>{
               
               if(index.month===this.props.month.substr(0,7)){
