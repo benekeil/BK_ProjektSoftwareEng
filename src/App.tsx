@@ -305,7 +305,7 @@ class App extends React.Component<IProps, IState>{
   public render() {
 
     return (
-      <IonApp onLoad={() => { this.firstLoadApp(); this.getMonthObj(); this.getActualMonth(); this.getActualBudget();}}>
+      <IonApp onLoad={() => { this.firstLoadApp(); this.getMonthObj();}}>
 
         {this.state.firstLoad && (<Start startRechner={this.startRechner} getMonth={this.getMonth} getStartbudget={this.getStartbudget}></Start>)}
         <IonReactRouter>
