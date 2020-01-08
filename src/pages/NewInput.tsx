@@ -23,9 +23,8 @@ interface IProps {
 }
 
 /**
- * Klasse bzw Komponente um neue Input Eintrage für den aktuellen Monat erstellen
+ * Klasse bzw Komponente um neue Input Einträge für den aktuellen Monat zu erstellen
  */
-
 class NewInput extends React.Component<IProps, IState> {
   state: IState ={
     issue: false,
@@ -62,7 +61,7 @@ class NewInput extends React.Component<IProps, IState> {
     }
     
     /**
-     * Methode um den Title eines Eintrags zu erhalten und diesen in den State
+     * Methode um den Title eines Eintrags zu erhalten und diesen in den State title zu speichern
      */
     public getTitle = (event: CustomEvent<InputChangeEventDetail>) => {
       this.setState({
@@ -70,14 +69,18 @@ class NewInput extends React.Component<IProps, IState> {
       })
     }
 
-
+    /**
+     * Methode um den Geldwert eines Eintrags zu erhalten und diesen in den State value zu speichern
+     */
     public getValue = (event: CustomEvent<InputChangeEventDetail>) => {
      this.setState({
         value: parseInt(event.detail.value!) ,
       })  
     }
 
-
+    /**
+     * Methode um das Datum eines Eintrags zu erhalten und diesen in den state date zu speichern.
+     */
     public getDate = (event: CustomEvent<DatetimeChangeEventDetail>) => {
       let date = event.detail.value;
       
@@ -88,6 +91,10 @@ class NewInput extends React.Component<IProps, IState> {
       });     
     }
 
+    /**
+     * Methode um alle Eingaben des Eintrags in der Indexed DB zu speichern. 
+     * Diese Methode wird bei Betätigung des Buttons "Add Input" ausgeführt.
+     */
     public saveInput(){
       const {add} = useIndexedDB('inputs');
       add({ausgabe: this.state.revenue, titel: this.state.title, betrag: this.state.value, datum: this.state.date, month: this.props.month, added: false, actualbudget: this.props.budget});
@@ -99,6 +106,12 @@ class NewInput extends React.Component<IProps, IState> {
         isSet: false})
     }
   
+
+    /**
+     * Methode um den Inhalt der Seite "New Input" zu rendern. 
+     * Stellt die Select/Input Tags dar und gibt den Button bei vollständigen Eintrag 
+     * der einzelnen Felder zum Betätigen frei.
+     */
     public render(){
       
     return (

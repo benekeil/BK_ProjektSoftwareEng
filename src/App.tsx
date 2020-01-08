@@ -78,6 +78,8 @@ interface actualMonthObj {
 /**
  * 
  * Documentation Projekt Softwareengineering
+ * Es wurde ein Ausgabenrechner implementiert, 
+ * der eine Übersicht über das aktuelle Budget und alle Ausgaben/Einnahmen eines Monats gibt
  * @author: Benedikt Keil
  * 
  */
@@ -316,7 +318,12 @@ class App extends React.Component<IProps, IState>{
     })
   }
 
-
+  /**
+   * Diese Methode rendert die TabBar die immer am unteren Bildschirmende gezeigt wird. 
+   * Außerdem wird ein Router erstellt der die Navigation zwischen den einzelnen Seiten bereit stellt.
+   * Hier werden auch die Methoden der App Klasse an die anderen Komponenten übergeben, 
+   * die dann in den einzelne Komponenten als Props zur Verfügung stehen.
+   */
   public render() {
 
     return (

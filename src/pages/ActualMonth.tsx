@@ -44,8 +44,12 @@ class ActualMonth extends React.Component<IProps, IState> {
       })
   } 
  
-
- 
+  /**
+   * Diese Methode rendert die Seite Actual Month. 
+   * Hier wird der aktuelle Monat mit dem aktuellen Budget angezeigt. 
+   * Mit Hilfe einer Map Funktion werden alle Inputs, die dem aktuellen Monat zugehören, aufgelistet. 
+   * Es wird jeder Input nach Art (Einnahme und Ausgabe) überprüft und mit entsprechenden Symbol (+ oder -) versehen.
+   */ 
   public render(){
  
     this.getInputsByIndex();

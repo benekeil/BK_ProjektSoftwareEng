@@ -5,10 +5,7 @@ import { InputChangeEventDetail } from '@ionic/core';
 import { useIndexedDB } from 'react-indexed-db';
 
 
-/**
- * Klasse oder Komponente die alle bisher hinzugefügten Monate in einer Auswahl auflistet 
- * und nach Auswahl eines Monats dessen kompletten Eingaben aufzeigt
- */
+
 
 
 interface IState {
@@ -23,7 +20,10 @@ interface IProps {
 }
 
 
-
+/**
+ * Klasse oder Komponente die alle bisher hinzugefügten Monate in einer Auswahl auflistet 
+ * und nach Auswahl eines Monats dessen kompletten Eingaben aufzeigt
+ */
 class MonthReview extends React.Component<IProps, IState> {
   state: IState = {
     inputs: [],
@@ -70,6 +70,10 @@ class MonthReview extends React.Component<IProps, IState> {
     })   
   }
 
+  /**
+   * Methode um alle in der Indexed DB gespeicherten Werte des ObjectStores "monthlist" abzurufen 
+   * und im State "monthlist" zu speichern
+   */
   public getMonthValues = () => {
     const { getAll } = useIndexedDB('monthlist');
 
@@ -81,6 +85,13 @@ class MonthReview extends React.Component<IProps, IState> {
     }) 
   }
 
+
+  /**
+   * Methode rendert die Seite Month Review. 
+   * Nachdem ein Monat über das Select Tag ausgewählt wurde, 
+   * wird eine Liste mit allen Inputs des ausgewählten Monats gerendert.
+   * Ebenfalls wird das Startbudget und das am Ende übrig gebliebene Endbudget angezeigt.
+   */
   public render() {
     
     return (
