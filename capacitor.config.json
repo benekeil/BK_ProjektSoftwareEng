@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "myAppv2",
+  "appName": "Mein Ausgabenrechner",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
