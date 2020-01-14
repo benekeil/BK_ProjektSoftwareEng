@@ -13,10 +13,13 @@ interface IState {
   inputs: object[];
   monthlist: object[];
   endBudget: number;
+  summeInputs: number;
+  startbudget: number;
 }
 
 interface IProps {
   monthObj: object[];
+  actualBudget: number;
 }
 
 
@@ -29,7 +32,9 @@ class MonthReview extends React.Component<IProps, IState> {
     inputs: [],
     reviewedMonth: "",
     monthlist: [],
-    endBudget: 0
+    endBudget: 0,
+    summeInputs: 0,
+    startbudget: 0,
   }
 
   /**
@@ -40,9 +45,10 @@ class MonthReview extends React.Component<IProps, IState> {
     this.setState({
       reviewedMonth: event.detail.value!,
     })
-    this.getMonthInputs();
+
     this.getMonthValues();
-   
+    this.getMonthInputs();
+
   }
 
   /**
@@ -50,24 +56,53 @@ class MonthReview extends React.Component<IProps, IState> {
    * Auch wird hier der Endbetrag des ausgewählten Monats gesetzt 
    */
   public getMonthInputs = () => {
-    const { getAll } = useIndexedDB('inputs');
 
+
+    const { getAll, update } = useIndexedDB('inputs');
     getAll().then((inputs) => {
 
-      this.setState({
-        inputs: inputs
-      })
-      
-      this.state.inputs.map((index: any) => {
-  
-        if (index.month === this.state.reviewedMonth.substr(0,7)) {
-            
+
+      this.state.monthlist.map((index: any) => {
+        if (index.month === this.state.reviewedMonth.substr(0, 7)) {
           this.setState({
-            endBudget: index.actualbudget
-          })  
+            startbudget: index.startbudget
+          })
         }
       })
-    })   
+
+      this.setState({
+        inputs: inputs,
+        summeInputs: 0,
+      })
+    }).then(() => {
+      if (this.state.inputs.length !== 0) {
+        this.state.inputs.map((index: any) => {
+          if (index.month === this.state.reviewedMonth.substr(0, 7)) {
+            let summeInputs = this.state.summeInputs;
+
+            if (index.ausgabe) {
+              summeInputs -= index.betrag;
+
+              this.setState({
+                summeInputs: summeInputs,
+              })
+            } else {
+              summeInputs += index.betrag;
+
+              this.setState({
+                summeInputs: summeInputs,
+              })
+            }
+          }
+        })
+      }
+    }).then(() => {
+      console.log("startbudget: " + this.state.startbudget)
+      let endBudget = this.state.startbudget - this.state.summeInputs;
+      this.setState({
+        endBudget: endBudget,
+      })
+    })
   }
 
   /**
@@ -81,8 +116,9 @@ class MonthReview extends React.Component<IProps, IState> {
 
       this.setState({
         monthlist: monthlist
-      })      
-    }) 
+      })
+
+    })
   }
 
 
@@ -93,7 +129,7 @@ class MonthReview extends React.Component<IProps, IState> {
    * Ebenfalls wird das Startbudget und das am Ende übrig gebliebene Endbudget angezeigt.
    */
   public render() {
-    
+
     return (
       <IonPage>
         <IonHeader>
@@ -120,35 +156,36 @@ class MonthReview extends React.Component<IProps, IState> {
               </IonSelect>
             </IonItem>
 
-                <IonList>
-                {
-                this.state.monthlist.map((monthValues: any)=>{
-                    if(monthValues.month === this.state.reviewedMonth.substr(0,7)){
-                      return(
-                        <IonItem key={monthValues.id}>
+            <IonList>
+              {
+                this.state.monthlist.map((monthValues: any) => {
+                  if (monthValues.month === this.state.reviewedMonth.substr(0, 7)) {
+
+                    return (
+                      <IonItem key={monthValues.id}>
                         <IonLabel>
-                          Startbudget: {monthValues.startbudget}
+                          Startbudget: {this.state.startbudget}
                         </IonLabel>
                         <IonLabel>
-                        Endbudget: {this.state.endBudget}
-                        </IonLabel>  
-                        </IonItem>
+                          Endbudget: {this.state.endBudget}
+                        </IonLabel>
+                      </IonItem>
 
-                        
-                      )
-                    }
-                }) } 
 
-                </IonList>
-            
+                    )
+                  }
+                })}
+
+            </IonList>
+
 
             <IonList>
-             
-                {
+
+              {
                 this.state.inputs.map((index: any) => {
 
-                  if (index.month === this.state.reviewedMonth.substr(0,7)) {
-                      
+                  if (index.month === this.state.reviewedMonth.substr(0, 7)) {
+
                     let out = "";
                     if (index.ausgabe) {
                       out = "+ "
@@ -157,7 +194,7 @@ class MonthReview extends React.Component<IProps, IState> {
                       out = "- "
 
                     }
-                    
+
                     return (
                       <IonItem key={index.inputs_id}>
                         <IonGrid>
@@ -176,7 +213,7 @@ class MonthReview extends React.Component<IProps, IState> {
                 })
               }
             </IonList>
-            
+
           </IonList>
         </IonContent>
       </IonPage>

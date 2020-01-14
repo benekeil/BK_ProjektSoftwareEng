@@ -83,7 +83,7 @@ import {
          
           
           
-              <IonButton color="secondary" expand="block"  onClick={this.props.startRechner} disabled={this.props.month == "test" !|| this.props.startbudget == NaN}>Start Ausgabenrechner</IonButton>
+              <IonButton color="secondary" expand="block"  onClick={this.props.startRechner} disabled={this.props.month === "test" !|| this.props.startbudget === 0}>Start Ausgabenrechner</IonButton>
             
           
         </IonContent>

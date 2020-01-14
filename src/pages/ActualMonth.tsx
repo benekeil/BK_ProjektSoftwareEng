@@ -1,8 +1,9 @@
 import React from 'react';
-import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar, IonRow, IonCol, IonGrid} from '@ionic/react';
+import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonPage, IonTitle, IonToolbar, IonRow, IonCol, IonGrid, IonIcon, IonButton} from '@ionic/react';
 
 
 import {useIndexedDB} from 'react-indexed-db';
+import { trash } from 'ionicons/icons';
 
 
 
@@ -18,6 +19,7 @@ import {useIndexedDB} from 'react-indexed-db';
   budget: number;
   getActualBudget: ()=> void; 
   getActualMonth: ()=> void; 
+  
   }
 
 
@@ -44,6 +46,17 @@ class ActualMonth extends React.Component<IProps, IState> {
       })
   } 
  
+  public deleteInput = (id: number)=>{
+      const {deleteRecord} = useIndexedDB('inputs');
+      deleteRecord(id).then( ()=>{
+        
+        this.props.getActualMonth();
+      })
+
+  }
+
+  
+
   /**
    * Diese Methode rendert die Seite Actual Month. 
    * Hier wird der aktuelle Monat mit dem aktuellen Budget angezeigt. 
@@ -92,6 +105,9 @@ class ActualMonth extends React.Component<IProps, IState> {
                   <IonCol>
                     Value
                   </IonCol>
+                  <IonCol size="2">
+                    
+                  </IonCol>
                 </IonRow>
               </IonGrid>
               </IonItem>
@@ -122,7 +138,7 @@ class ActualMonth extends React.Component<IProps, IState> {
               <IonCol>
                {out}
                 {index.betrag}€</IonCol>
-              
+              <IonCol size="2"><IonButton onClick={()=>{this.deleteInput(index.inputs_id);}}><IonIcon icon={trash}></IonIcon></IonButton></IonCol>
             </IonRow>
             </IonGrid>
             </IonItem>

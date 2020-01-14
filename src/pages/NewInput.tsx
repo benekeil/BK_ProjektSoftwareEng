@@ -35,6 +35,7 @@ class NewInput extends React.Component<IProps, IState> {
     isSet: false
 
   }
+  textInput = "";
 
   
     /**
@@ -98,13 +99,10 @@ class NewInput extends React.Component<IProps, IState> {
     public saveInput(){
       const {add} = useIndexedDB('inputs');
       add({ausgabe: this.state.revenue, titel: this.state.title, betrag: this.state.value, datum: this.state.date, month: this.props.month, added: false, actualbudget: this.props.budget});
-      this.setState({ issue: false,
-        revenue: false,
-        title: "",
-        value: 0,
-        date: "",
-        isSet: false})
+      
     }
+
+    
   
 
     /**
@@ -145,7 +143,7 @@ class NewInput extends React.Component<IProps, IState> {
       <IonItem>
             <IonIcon slot="start" color="medium" icon={add} />
             <IonIcon slot="start" color="medium" icon={remove} />
-            <IonSelect title="Input/Output" onIonChange={this.getType}>
+            <IonSelect title="Input/Output" placeholder="Select +/-" onIonChange={this.getType}>
               <IonSelectOption>Revenue (+)</IonSelectOption>
               <IonSelectOption>Issue (-)</IonSelectOption>
             </IonSelect>
@@ -153,7 +151,7 @@ class NewInput extends React.Component<IProps, IState> {
 
             <IonItem>
             <IonIcon slot="start" color="medium" icon={text} />
-            <IonInput type="text" placeholder="Title" onIonChange={this.getTitle} ></IonInput>
+            <IonInput type="text" placeholder="Type Title" onIonChange={this.getTitle} ></IonInput>
             </IonItem>
 
       <IonItem>

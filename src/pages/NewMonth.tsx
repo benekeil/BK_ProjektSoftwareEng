@@ -36,7 +36,8 @@ interface IProps {
   getMonth: (event: CustomEvent<DatetimeChangeEventDetail>)=>void;
   getStartbudget: (event: CustomEvent<InputChangeEventDetail>)=>void;
   pushMonthObj: ()=>void;
-
+  month: string;
+  startbudget:number;
 }
 
 class NewMonth extends React.Component<IProps, IState>  {
@@ -84,7 +85,7 @@ state: IState ={
             <IonInput type="number" placeholder="Select Startbudget"  inputMode="numeric" onIonChange={this.props.getStartbudget}></IonInput>
             </IonItem>
         
-            <IonButton color="secondary" expand="block" routerLink="/newInput" onClick={this.props.pushMonthObj}>Start Month</IonButton>
+            <IonButton color="secondary" expand="block" routerLink="/newInput"  onClick={this.props.pushMonthObj}>Start Month</IonButton>
           
         
       </IonContent>
