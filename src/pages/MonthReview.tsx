@@ -53,7 +53,8 @@ class MonthReview extends React.Component<IProps, IState> {
 
   /**
    * Methode um alle Inputs der Indexed DB abzurufen und in State inputs zu speichern.
-   * Auch wird hier der Endbetrag des ausgewählten Monats gesetzt 
+   * Es wird das Startbudget des ausgewählten Monats aus der Datenbank gelesen.
+   * Auch wird hier der Endbetrag des ausgewählten Monats berechnet. 
    */
   public getMonthInputs = () => {
 

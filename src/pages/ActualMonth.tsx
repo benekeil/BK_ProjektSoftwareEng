@@ -46,6 +46,11 @@ class ActualMonth extends React.Component<IProps, IState> {
       })
   } 
  
+
+  /** 
+   *Methode die bestimmten Input löscht. 
+   *Der bestimmte Input wird durch Übergabe der id's (number) des Datenbankseintrags bestimmt. 
+   */
   public deleteInput = (id: number)=>{
       const {deleteRecord} = useIndexedDB('inputs');
       deleteRecord(id).then( ()=>{

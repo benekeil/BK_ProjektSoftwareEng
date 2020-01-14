@@ -22,10 +22,7 @@ import {
 
   
   
-  /**
-   * Klasse bzw Komponente um die Seite der Monats Eingabe darzustellen
-   * Erhällt Methoden (getMonth, getStartbudget, pushMonthObj) von App Komponente als Props
-   */
+  
   interface IState {
 
   }
@@ -34,7 +31,11 @@ import {
     
   
   }
-  
+  /**
+   * Klasse bzw Komponente die Hinweis bei falscher Monatseingabe ausgibt.
+   * Falsche Monatseingabe entspricht Versuch Monat erneut zu starten,
+   * obwohl dieser schon einmal ausgewählt wurde und in Datenbank gespeichert ist.
+   */
   class MonthError extends React.Component<IProps, IState>  {
   state: IState ={
   
