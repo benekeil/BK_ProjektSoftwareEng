@@ -17,6 +17,7 @@ import NewInput from './pages/NewInput';
 import ActualMonth from './pages/ActualMonth';
 import Start from './pages/Start';
 import MonthError from './errors/MonthError';
+import StartMonthInput from './pages/StartMonthInput';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -351,6 +352,9 @@ class App extends React.Component<IProps, IState>{
 
           {this.state.normalMode && (<IonTabs>
             <IonRouterOutlet>
+              <Route path="/start">
+              <StartMonthInput></StartMonthInput>
+              </Route>
               <Route path="/newMonth" >
                 <NewMonth getMonth={this.getMonth} getStartbudget={this.getStartbudget} pushMonthObj={this.pushMonthObj} month={this.state.month} startbudget={this.state.startbudget}></NewMonth>
               </Route>
@@ -365,7 +369,7 @@ class App extends React.Component<IProps, IState>{
             </IonRouterOutlet>
 
             <IonTabBar slot="bottom">
-              <IonTabButton tab="newInput" href="/newInput" onClick={this.getActualBudget2}>
+              <IonTabButton  href="/newInput" onClick={this.getActualBudget2}>
                 <IonIcon icon={addCircle} />
                 <IonLabel>New Input</IonLabel>
               </IonTabButton>
