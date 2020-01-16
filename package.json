@@ -15,6 +15,7 @@
     "@types/react-router-dom": "^5.1.0",
     "bootstrap": "^4.4.1",
     "ionicons": "^4.6.3",
+    "ionic": "^5.4.14",
     "jsdoc": "^3.6.3",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
