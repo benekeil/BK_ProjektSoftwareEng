@@ -362,14 +362,14 @@ class App extends React.Component<IProps, IState>{
               <Route path="/actualMonth" component={ActualMonth} exact={true}>
                 <ActualMonth month={this.state.month} budget={this.state.actualBudget} getActualBudget={this.getActualBudget2} getActualMonth={this.getActualMonth} ></ActualMonth>
               </Route>
-              <Route path="/newInput" component={NewInput}>
+              <Route path="/newInput" >
                 <NewInput month={this.state.month} budget={this.state.actualBudget} getActualBudget={this.getActualBudget2} ></NewInput>
               </Route>
               <Route path="/" render={() => <Redirect to="/start" />} exact={true} />
             </IonRouterOutlet>
 
             <IonTabBar slot="bottom">
-              <IonTabButton  href="/newInput" onClick={this.getActualBudget2}>
+              <IonTabButton href="/newInput" onClick={this.getActualBudget2} >
                 <IonIcon icon={addCircle} />
                 <IonLabel>New Input</IonLabel>
               </IonTabButton>

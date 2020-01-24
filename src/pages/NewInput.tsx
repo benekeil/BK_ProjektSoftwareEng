@@ -113,7 +113,7 @@ class NewInput extends React.Component<IProps, IState> {
     public render(){
       
     return (
-    <IonPage>
+    <IonPage >
       <IonHeader>
         <IonToolbar>
           <IonTitle>New Input</IonTitle>
